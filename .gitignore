@@ -1,0 +1,13 @@
+/out
+bin/
+Build/
+dependencies/raylib/build/
+dependencies/raylib/out/
+
+/.vs
+.idea/
+CMakeSettings.json
+Makefile
+
+settings/
+saves/
