@@ -28,6 +28,9 @@ add_executable(${CMAKE_PROJECT_NAME} ${PROJECT_SOURCES})
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
 	"${CMAKE_CURRENT_SOURCE_DIR}/include")
 
+target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
+	RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/resources/")
+
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
 	glfw
 	glad

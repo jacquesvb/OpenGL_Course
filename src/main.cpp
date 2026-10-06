@@ -3,8 +3,17 @@
 #include <GLFW/glfw3.h>
 
 #include <openglErrorReporting.h>
+#include <shader.h>
 
 #include <iostream>
+
+float triangleData[] = {
+	// positions		colors
+	//x  y  z			r  g  b
+	  0, 1, 0,			1, 0, 0, // vertex 1
+	  -1, -1, 0,		0, 1, 0, // vertex 2
+	  1, -1, 0,			0, 0, 0  // vertex 3
+};
 
 int main(void)
 {
@@ -36,23 +45,37 @@ int main(void)
 
 	enableReportGlErrors();
 
+#pragma region buffer
+	// create the buffer
+	GLuint buffer = 0;
+	glGenBuffers(1, &buffer);
+
+	// send the data to the buffer
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(triangleData), triangleData, GL_STATIC_DRAW);
+
+	// the attribute representing position
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0);
+
+	// the attribute representing color
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void *)(sizeof(float) * 3));
+
+#pragma endregion
+#pragma region shader loading
+	Shader shader;
+
+	shader.loadShaderProgramFromFile(RESOURCES_PATH "myshader.vert", RESOURCES_PATH "myshader.frag");
+
+	shader.bind();
+#pragma endregion
+
 	while (!glfwWindowShouldClose(window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glBegin(GL_TRIANGLES);
-
-		glVertex2f(0, 1);
-		glColor3f(1, 0, 0);
-
-		glVertex2f(-1, -1);
-		glColor3f(0, 1, 0);
-
-		glVertex2f(1, -1);
-		glColor3f(0, 0, 1);
-
-		glEnd();
-
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
