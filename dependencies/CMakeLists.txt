@@ -17,11 +17,19 @@ set(CMAKE_POLICY_VERSION_MINIMUM 3.5)
 add_subdirectory(gl2d/gl2d)
 
 # --------------------------------------------------------------------------------------
-# glad - OpenGL extension loader, generated for core profile 4.3.
-# 4.3 is the minimum core profile that provides GL_DEBUG_OUTPUT / glDebugMessageCallback,
-# which include/openglErrorReporting.h needs. src/main.cpp still asks GLFW for a 3.3
-# core context, which is fine: the driver exposes the debug output entry points
-# regardless of the context version.
+# glad - OpenGL extension loader, generated for gl=4.6, COMPATIBILITY profile
+# (glad 0.1.36, C, no extensions).
+#
+# Compatibility rather than core is what makes src/main.cpp compile: the fixed-function
+# pipeline (glBegin/glVertex2f/glColor3f/glEnd) only exists in the compat profile.
+# Core profile removed it in GL 3.2. The compat profile at 4.6 still provides
+# GL_DEBUG_OUTPUT / glDebugMessageCallback, which include/openglErrorReporting.h needs.
+#
+# Immediate mode therefore requires a compatibility context: src/main.cpp deliberately
+# sets no GLFW_CONTEXT_VERSION hints outside __APPLE__, so GLFW hands out a compat
+# context and glfwGetProcAddress resolves glBegin etc. If you port that file to shaders,
+# regenerate this loader for 'gl=4.6' + 'core' instead.
+# Backups of the previous core-profile loader live in git history.
 # --------------------------------------------------------------------------------------
 add_library(glad STATIC "${CMAKE_CURRENT_SOURCE_DIR}/glad/src/glad.c")
 target_include_directories(glad PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/glad/include")
