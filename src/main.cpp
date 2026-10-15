@@ -10,17 +10,9 @@
 float triangleData[] = {
 	// positions		colors
 	//x  y  z			r  g  b
-	  -1, -1, 0,		0.5, 0.8, 1, // bottom-left (light blue)
-	  0, -1, 0,			0.5, 0.8, 1, // bottom-center (light blue)
-	  -0.5, 0, 0,		0.5, 0.8, 1, // left-edge midpoint (light blue)
-
-	  0, -1, 0,			0.5, 0.8, 1, // bottom-center (light blue)
-	  0, 1, 0,			1, 0, 0, // top (red)
-	  -0.5, 0, 0,		0.5, 0.8, 1, // left-edge midpoint (light blue)
-
-	  0, -1, 0,			0.5, 0.8, 1, // bottom-center (light blue)
-	  1, -1, 0,			0, 0, 0, // bottom-right (black)
-	  0, 1, 0,			1, 0, 0  // top (red)
+	  0, 1, 0,			0, 1, 1, // vertex 1 (cyan)
+	  -1, -1, 0,		1, 0, 1, // vertex 2 (magenta)
+	  1, -1, 0,			1, 1, 0  // vertex 3 (yellow)
 };
 
 int main(void)
@@ -88,7 +80,7 @@ int main(void)
 		
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glDrawArrays(GL_TRIANGLES, 0, 9);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
