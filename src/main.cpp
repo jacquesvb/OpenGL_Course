@@ -8,11 +8,11 @@
 #include <iostream>
 
 float triangleData[] = {
-	// positions		colors
+	// positions		colors (unused: shading is computed in the fragment shader)
 	//x  y  z			r  g  b
-	  0, 1, 0,			0, 1, 1, // vertex 1 (cyan)
-	  -1, -1, 0,		1, 0, 1, // vertex 2 (magenta)
-	  1, -1, 0,			1, 1, 0  // vertex 3 (yellow)
+	  0, 1, 0,			1, 0, 0, // vertex 1 (top, red)
+	  -1, -1, 0,		0, 1, 0, // vertex 2 (bottom-left, green)
+	  1, -1, 0,			0, 0, 0.5  // vertex 3 (bottom-right, dark blue)
 };
 
 int main(void)
