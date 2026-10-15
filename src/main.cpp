@@ -12,7 +12,7 @@ float triangleData[] = {
 	//x  y  z			r  g  b
 	  0, 1, 0,			1, 0, 0, // vertex 1
 	  -1, -1, 0,		0, 1, 0, // vertex 2
-	  1, -1, 0,			0, 0, 0  // vertex 3
+	  1, -1, 0,			0, 0, 1  // vertex 3
 };
 
 int main(void)
@@ -73,6 +73,11 @@ int main(void)
 
 	while (!glfwWindowShouldClose(window))
 	{
+		// tell OpenGL that we resized our  window
+		int w = 0, h = 0;
+		glfwGetWindowSize(window, &w, &h);
+		glViewport(0, 0, w, h);
+		
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glDrawArrays(GL_TRIANGLES, 0, 3);
